@@ -3,7 +3,13 @@ body {
   color: #ddd;
   background-color: #222;
 
+  --timing: ease-in-out;
+
   counter-reset: countdown 10;
+}
+
+body:has(#linear:checked) {
+  --timing: linear;
 }
 
 main {
@@ -13,30 +19,45 @@ main {
   overflow: hidden;
 }
 
-label {
-  display: block;
+div#settings {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 12px;
+  height: 48px;
+
+  div#controls {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  label {
+    align-self: center;
+  }
 }
 
-div {
+div#animation {
   margin: 16px 36px 0 0;
   background-color: #f00
 }
 
-div::after {
+div#animation::after {
   font-size: 256px;
   color: #222;
   line-height: 1em;
   content: counter(countdown);
 }
 
-body:has(input#paused:checked) div,
-body:has(input#play:checked) div {
+body:has(input#paused:checked) div#animation,
+body:has(input#play:checked) div#animation {
   animation-name: timer;
   animation-duration: 10s;
   animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-timing-function: var(--timing);
 }
 
-body:has(input#paused:checked) div {
+body:has(input#paused:checked) div#animation {
   animation-play-state: paused;
 }
 
@@ -52,6 +73,72 @@ body:has(input#paused:checked) div {
  80% { background-color: #80f; }
  90% { background-color: #f0f; }
 100% { background-color: #f00; }
+}
+
+/* SLIDER-TYPE CHECKBOXES // // // // / SLIDER-TYPE CHECKBOXES */
+
+label {
+  --size: 0.6em;
+  --onColor: rgb(255,255,255);
+  --offColor: rgba(255,255,255,0.333);
+  --dullColor: rgba(255,255,255,0.125);
+}
+
+input[type=checkbox] {
+  width: 0;
+  height: 0;
+  opacity: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+input[type=checkbox] ~ span.slot {
+  display: inline-block;
+  position: relative;
+  margin: 0 0.5em;
+  width: calc(2 * var(--size));
+  height: var(--size);
+  border: 0.02em solid var(--offColor);
+  border-radius: var(--size);
+  background-color: var(--dullColor);
+}
+
+input[type=checkbox]:checked ~ span.slot,
+.two-way input[type=checkbox] ~ span.slot {
+  border-color: var(--onColor);
+  background-color: transparent;
+}
+
+input[type=checkbox] ~ span span{
+  display: inline-block;
+  position: absolute;
+  margin: 0;
+  width: var(--size);
+  height: var(--size);
+  left: 0;
+  top: 0;
+
+  background-color: var(--offColor);
+  border-radius: var(--size);
+  transition: all 0.25s;
+}
+
+.two-way input[type=checkbox] ~ span span {
+  background-color: var(--onColor);
+}
+
+input[type=checkbox]:checked ~ span  span {
+  left: var(--size);
+  background-color: var(--onColor);
+}
+
+.two-way input[type=checkbox]:not(:checked) ~ span:last-of-type {
+  color: var(--offColor);
+}
+
+.two-way input[type=checkbox]:checked ~ span:first-of-type {
+  color: var(--offColor);
 }
 
 /* Show the GitHub logo */

@@ -5,41 +5,57 @@
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0">
-  <title>Countdown</title>
+  <title>Colour Countdown</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
   <main>
-    <label>
-      <input
-        type="radio"
-        name="play-state"
-        id="play"
-      >
-      <span>Play</span>
-    </label>
+    <div id="settings">
+      <div id="controls">
+        <label>
+          <input
+            type="radio"
+            name="play-state"
+            id="play"
+          >
+          <span>Play</span>
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="play-state"
+            id="paused"
+          >
+          <span>Pause</span>
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="play-state"
+            id="reset"
+            checked
+          >
+          <span>Reset</span>
+        </label>
+      </div>
 
-    <label>
-      <input
-        type="radio"
-        name="play-state"
-        id="paused"
+      <label
+        class="two-way"
       >
-      <span>Pause</span>
-    </label>
+        <input
+          id="linear"
+          type="checkbox"
+        >
+        <span class="pre">ease-in-out</span>
+        <span class="slot">
+          <span class="slider"></span>
+        </span>
+        <span class="post">linear</span>
+      </label>
+    </div>
 
-    <label>
-      <input
-        type="radio"
-        name="play-state"
-        id="reset"
-        checked
-      >
-      <span>Reset</span>
-    </label>
-
-    <div></div>
+    <div id="animation"></div>
 
   <a
     class="github"
